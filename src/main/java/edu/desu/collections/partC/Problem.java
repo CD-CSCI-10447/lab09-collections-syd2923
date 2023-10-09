@@ -1,31 +1,39 @@
 package edu.desu.collections.partC;
 
 import java.util.HashMap;
+import java.util.Map;
 
 public class Problem {
-    public static Integer characterReplacement(String s, int k){
-        if (s == null || s.length() == 0) return 0;
+    public static int characterReplacement(String s, int k) {
+        if (s == null || s.isEmpty()) {
+            return 0;
+        }
 
-        HashMap<Character, Integer> charCount = new HashMap<>();
-        int start = 0, maxCount = 0, maxLength = 0;
+        int maxLength = 0;
+        int maxCount = 0;
+        int left = 0;
 
-        for (int end = 0; end < s.length(); end++) {
+        // Store character frequencies
+        Map<Character, Integer> charFrequency = new HashMap<>();
 
-            if(charCount.containsKey(s.charAt(end))){
-                Integer currentCount = charCount.get(s.charAt(end)) + 1;
-                charCount.put(s.charAt(end), currentCount);
-            }else {
-                charCount.put(s.charAt(end), 1);
+        for (int right = 0; right < s.length(); right++) {
+            char rightChar = s.charAt(right);
+            charFrequency.put(rightChar, charFrequency.getOrDefault(rightChar, 0) + 1);
+
+            // Update the maximum repeating character count
+            maxCount = Math.max(maxCount, charFrequency.get(rightChar));
+
+            // Calculate the window size
+            int windowSize = right - left + 1;
+
+            // If the window size - maxCount exceeds k, slide the window
+            if (windowSize - maxCount > k) {
+                char leftChar = s.charAt(left);
+                charFrequency.put(leftChar, charFrequency.get(leftChar) - 1);
+                left++;
             }
 
-            maxCount = Math.max(maxCount, charCount.get(s.charAt(end)));
-
-            while (end - start + 1 - maxCount > k) {
-                charCount.put(s.charAt(start), charCount.get(s.charAt(start)) - 1);
-                start++;
-            }
-
-            maxLength = Math.max(maxLength, end - start + 1);
+            maxLength = Math.max(maxLength, right - left + 1);
         }
 
         return maxLength;

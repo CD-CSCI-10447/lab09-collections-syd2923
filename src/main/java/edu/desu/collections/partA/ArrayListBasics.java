@@ -12,7 +12,10 @@ public class ArrayListBasics {
     // the provided elements to the given list.
     // Return the updated list after adding the elements.
     public ArrayList<Integer> addElements(ArrayList<Integer> list, int... elements) {
-        return null;
+        for (int i: elements){
+            list.add(i);
+        }
+        return list;
     }
 
     // HINT: Traverse through all elements in the list and build a string
@@ -20,13 +23,18 @@ public class ArrayListBasics {
     // Consider using StringBuilder or a loop for this.
     // The format should be like: "1 2 3 " (Note the trailing space).
     public String printArrayList(ArrayList<Integer> list) {
-        return null;
+        String data = "";
+        for ( int element: list) {
+            data += element + " ";
+        }
+        return data;
     }
 
     // HINT: Use the 'remove' method of the ArrayList to remove the element
     // at the given index from the list.
     // Return the updated list after removing the element.
     public ArrayList<Integer> removeElement(ArrayList<Integer> list, int index) {
-        return null;
+        list.remove(index);
+        return list;
     }
 }
